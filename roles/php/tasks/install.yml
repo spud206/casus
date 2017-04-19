@@ -50,12 +50,13 @@
   failed_when: false
   register: installed_php_versions
 
-- name: php:tasks main.yml | download and install git-core
+- name: php:tasks install.yml | download and install git-core
   apt: 
     name: git-core
     state: present
     update_cache: yes
   when: php_version not in installed_php_versions.stdout
+  notify: remove git-core
 
 - name: php:tasks install | Clone the PHP repository.
   git:
@@ -108,13 +109,6 @@
     mode: 0755
   when: php_version not in installed_php_versions.stdout
 
-# Todo: let this be an handler
-- name: php:tasks main.yml | remove git-core
-  apt: 
-    name: git-core
-    state: absent
-  when: php_version not in installed_php_versions.stdout
-
 # PHP FPM configuration.
 - name:  php:tasks install | Ensure php-fpm executable is symlinked into a standard path.
   file:
@@ -125,8 +119,16 @@
 
 - name:  php:tasks install | Ensure php-fpm init script is installed.
   template:
-    src: fpm-init.j2
+    src: fpm-init-basic.j2
     dest: "/etc/init.d/{{ php_fpm_daemon }}"
+    mode: 0755
+  when: "'--enable-fpm' in php_source_configure_command"
+  notify: restart php-fpm
+
+- name:  php:tasks install | Ensure php-fpm service unit file.
+  template:
+    src: php-fpm.service.j2
+    dest: "/etc/systemd/system/{{ php_fpm_daemon }}.service"
     mode: 0755
   when: "'--enable-fpm' in php_source_configure_command"
   notify: restart php-fpm
@@ -134,7 +136,9 @@
 # register service, need more details ....
 # systemctl enable php-7.0.15-fpm.service
 - name: php:tasks install | register service
-  command: "systemctl enable php-{{ php_version }}-fpm.service"
+  command: "systemctl enable php-{{ php_version }}-fpm.service -f"
+
+- command: "systemctl daemon-reload"
 
 - name: php:tasks install | Ensure php-fpm config directory exists.
   file:
@@ -148,8 +152,5 @@
     dest: "{{ php_fpm_conf_path }}/php-fpm.conf"
     mode: 0644
   when: "'--enable-fpm' in php_source_configure_command"
-
-# fix restart (handle?)
-#
-#- name: restart php-fpm
-#  shell: /etc/init.d/{{ php_fpm_daemon }} restart
+  notify: restart php-fpm
+  
