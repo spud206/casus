@@ -1,0 +1,42 @@
+#
+# Needed to include php version specific var files ( Do we want this? )
+#
+- debug: 
+    msg: "install php {{ php_version }} on {{ inventory_hostname }}"
+    verbosity: 2
+
+- name: php:tasks wrapper.yml | include default vars
+  include_vars: php_install_vars.yml
+
+- name: php:tasks wrapper.yml | include host specific vars
+  stat: path="{{ inventory_dir }}/host_vars/{{ inventory_hostname }}/php.yml"
+  register: host_specific_vars_file
+  delegate_to: localhost
+
+- include_vars: "inventory/host_vars/{{ inventory_hostname }}/php.yml"
+  when: host_specific_vars_file.stat.exists == True
+
+- name: php:tasks wrapper.yml | include version specific vars
+  stat: path="{{ inventory_dir }}/host_vars/{{ inventory_hostname }}/php-{{ php_version }}.yml"
+  register: version_specific_vars_file
+  delegate_to: localhost
+
+- include_vars: "inventory/host_vars/{{ inventory_hostname }}/php-{{ php_version }}.yml"
+  when: version_specific_vars_file.stat.exists == True
+
+- debug:
+    msg: hostvars[inventory_hostname]
+    verbosity: 4
+
+#
+# run main tasks in role
+#
+
+- name: php:tasks wrapper.yml | include installation
+  include: install.yml 
+
+- name: php:tasks wrapper.yml | include configure
+  include: configure.yml
+
+- name: php:tasks wrapper.yml | include configure_fpm 
+  include: configure_fpm.yml

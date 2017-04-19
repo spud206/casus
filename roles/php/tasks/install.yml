@@ -1,0 +1,155 @@
+# Todo: 5.6.30 PHP configure bison required
+
+- name: php:tasks install | Update apt cache (Debian).
+  apt: update_cache=yes cache_valid_time=86400
+  when: ansible_os_family == 'Debian'
+
+- name: php:tasks install | Ensure dependencies for building from source are installed (Debian).
+  apt: "pkg={{ item }} state=installed"
+  with_items:
+    - build-essential
+    - autoconf
+    - automake
+    - libtool
+    - bison
+    - pkg-config
+    - re2c
+    - libxml2-dev
+    - libcurl4-openssl-dev
+    - libbz2-dev
+    - libjpeg-dev
+    - libpng12-dev
+    - libxpm-dev
+    - libfreetype6-dev
+    - libgmp3-dev
+    - libmcrypt-dev
+    - libmysqlclient-dev
+    - libpspell-dev
+    - librecode-dev
+    - libssl-dev
+    - libsystemd-dev
+  when: ansible_os_family == 'Debian'
+
+- name: php:tasks install | Check if gmp.h is already in a location accessible to gcc.
+  stat: path=/usr/include/gmp.h
+  register: gmp_file
+
+- name: php:tasks install | Ensure gmp.h is symlinked into a location accessible to gcc.
+  file:
+    src: "{{ php_source_install_gmp_path }}"
+    dest: /usr/include/gmp.h
+    state: link
+  when: gmp_file.stat.exists == false
+
+# Todo: What if version is installed, but not with right options
+# --> check options that matter: php -i
+
+- name: php:tasks install | Find installed php version(s)
+  command: find / -type f -name php -exec {} -v \;
+  changed_when: false
+  failed_when: false
+  register: installed_php_versions
+
+- name: php:tasks main.yml | download and install git-core
+  apt: 
+    name: git-core
+    state: present
+    update_cache: yes
+  when: php_version not in installed_php_versions.stdout
+
+- name: php:tasks install | Clone the PHP repository.
+  git:
+    repo: https://git.php.net/repository/php-src.git
+    dest: "{{ php_source_clone_dir }}"
+    version: "php-{{ php_version }}"
+    accept_hostkey: yes
+    depth: "{{ php_source_clone_depth }}"
+  when: php_version not in installed_php_versions.stdout
+
+- name: php:tasks install | Ensure PHP installation path exists.
+  file:
+    path: "{{ php_source_install_path }}"
+    state: directory
+    mode: 0755
+  when: php_version not in installed_php_versions.stdout
+
+- name: php:tasks install | Build configure script.
+  shell: >
+    ./buildconf --force
+    chdir={{ php_source_clone_dir }}
+  when: php_version not in installed_php_versions.stdout
+
+- name: php:tasks install | Run configure script.
+  shell: >
+    {{ php_source_configure_command }}
+    chdir={{ php_source_clone_dir }}
+  when: php_version not in installed_php_versions.stdout
+
+- name: php:tasks install | Make and install PHP.
+  shell: >
+    {{ item }}
+    chdir={{ php_source_clone_dir }}
+  with_items:
+    - "{{ php_source_make_command }}"
+    - make install
+  when: php_version not in installed_php_versions.stdout
+
+- name: php:tasks install | Ensure php executable is symlinked into a standard path.
+  file:
+    src: "{{ php_source_install_path }}/bin/php"
+    dest: /usr/bin/php
+    state: link
+  when: php_version not in installed_php_versions.stdout
+
+- name: php:tasks install | remove php source
+  file:
+    path: "{{ php_source_clone_dir }}"
+    state: absent
+    mode: 0755
+  when: php_version not in installed_php_versions.stdout
+
+# Todo: let this be an handler
+- name: php:tasks main.yml | remove git-core
+  apt: 
+    name: git-core
+    state: absent
+  when: php_version not in installed_php_versions.stdout
+
+# PHP FPM configuration.
+- name:  php:tasks install | Ensure php-fpm executable is symlinked into a standard path.
+  file:
+    src: "{{ php_source_install_path }}/sbin/php-fpm"
+    dest: "/usr/sbin/{{ php_fpm_daemon }}"
+    state: link
+  when: "'--enable-fpm' in php_source_configure_command"
+
+- name:  php:tasks install | Ensure php-fpm init script is installed.
+  template:
+    src: fpm-init.j2
+    dest: "/etc/init.d/{{ php_fpm_daemon }}"
+    mode: 0755
+  when: "'--enable-fpm' in php_source_configure_command"
+  notify: restart php-fpm
+
+# register service, need more details ....
+# systemctl enable php-7.0.15-fpm.service
+- name: php:tasks install | register service
+  command: "systemctl enable php-{{ php_version }}-fpm.service"
+
+- name: php:tasks install | Ensure php-fpm config directory exists.
+  file:
+    path: "{{ php_fpm_conf_path }}"
+    state: directory
+  when: "'--enable-fpm' in php_source_configure_command"
+
+- name:  php:tasks install | Ensure php-fpm config file is installed.
+  template:
+    src: php-fpm.conf.j2
+    dest: "{{ php_fpm_conf_path }}/php-fpm.conf"
+    mode: 0644
+  when: "'--enable-fpm' in php_source_configure_command"
+
+# fix restart (handle?)
+#
+#- name: restart php-fpm
+#  shell: /etc/init.d/{{ php_fpm_daemon }} restart

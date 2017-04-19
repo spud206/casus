@@ -1,0 +1,21 @@
+nginx_sites:
+  www.mydomain.com:
+    - listen 80
+    - server_name www.mydomain.com
+    - root {{ nginx_document_root }}/www.mydomain.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  192.168.107.6:
+    - listen 80
+    - server_name 192.168.107.6
+    - root {{ nginx_document_root }}/192.168.107.6/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7017;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }

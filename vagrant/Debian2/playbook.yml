@@ -1,0 +1,21 @@
+- hosts: default
+  tasks:
+#  - name: sudo for ansible user 
+#    user:
+#      name: "ansible" 
+#      group: "sudo"
+#      append: yes
+#    become: yes
+#    become_method: sudo
+#
+  - debug: msg="{{ ansible_all_ipv4_addresses | first }}"
+#
+#- hosts: localhost
+#  tasks:
+#  - name: update inventory file
+#    lineinfile:
+#      path: "/home/ewout/ansible/inventory/hosts"
+#      backup: yes
+#      line: "{{ ansible_default_ipv4 }} ansible_user=ansible"
+#    become: yes
+#    become_method: sudo

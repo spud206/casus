@@ -1,0 +1,17 @@
+- name: purge_nginx | remove package nginx
+  apt: 
+    name: nginx
+    state: absent
+    purge: yes
+    autoremove: yes
+    
+- name: purge_nginx | remove nginx repository from source
+  apt_repository:
+    repo: deb http://nginx.org/packages/debian/ {{ ansible_distribution_release }} nginx
+    state: absent
+    filename: nginx
+    
+# - name: purge_nginx | remove nginx repository signing key
+#  apt_key:
+#    url: http://nginx.org/keys/nginx_signing.key
+#    state: absent 

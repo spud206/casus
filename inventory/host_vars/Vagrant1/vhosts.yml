@@ -1,0 +1,8 @@
+nginx_user: www-data
+nginx_group: www-data
+nginx_sites:
+  www.example.com:
+    - listen 80
+    - server_name www.example.com
+    - root {{ nginx_document_root }}/www.example.com/html/
+    - index index.html

@@ -1,0 +1,4 @@
+site_owner: nginx
+site_group: nginx
+nginx_user: www-data
+nginx_group: www-data

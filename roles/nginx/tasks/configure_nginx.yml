@@ -1,0 +1,146 @@
+- name: configure_nginx | create group for nginx user
+  group:
+    name: "{{ nginx_group }}"
+    state: present
+
+- name: configure_nginx | create user for nginx
+  user:
+    name: "{{ nginx_user }}" 
+    group: "{{ nginx_group }}"
+    append: yes
+    shell: /bin/false
+    state: present
+    createhome: no 
+
+# Todo: remove installation defaults
+
+- name: configure_nginx | create directories for configuration
+  file:
+    path: "{{ nginx_conf_dir }}/{{ item }}"
+    state: directory
+    owner: root
+    group: "{{ nginx_group }}"
+    mode: 0755
+  with_items:
+    - "sites-available"
+    - "sites-enabled"
+    - "conf.d"
+
+- name: configure_nginx | create directory for logging
+  file: 
+    path: "{{ nginx_log_dir }}"
+    state: directory
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_group }}"
+    mode: 0750
+
+- name: Copy nginx configuration file
+  template:
+    src: nginx.conf.j2
+    dest: "{{ nginx_conf_dir }}/nginx.conf"
+    owner: root
+    group: "{{ nginx_group }}"
+  notify:
+    - restart nginx
+
+# include following line in fastcgi_param
+# fastcgi_param SCRIPT_FILENAME $request_filename;
+
+- name: 
+  lineinfile: 
+    path: "{{ nginx_conf_dir }}/fastcgi_params"
+    regexp: '^\s*fastcgi_param\s*SCRIPT_FILENAME'
+    line: 'fastcgi_param SCRIPT_FILENAME $request_filename;'
+    state: present
+  notify:
+    - restart nginx
+
+# Configure Sites
+#
+- name: Copy site configuration file(s)
+  template:
+    src: "{{ item.value.template | default('site.conf.j2') }}"
+    dest: "{{ nginx_conf_dir }}/sites-available/{{ item.key }}.conf"
+    owner: root
+    group: "{{ nginx_group }}"
+    mode: 0644
+  with_dict: "{{ nginx_sites }}"
+  notify:
+    - reload nginx
+
+- name: configure_nginx | create document root directory
+  file:
+    path: "{{ nginx_document_root }}/{{ item.key }}/html/"
+    state: directory
+    owner: "{{ site_owner }}"
+    group: "{{ site_group }}"
+    mode: 0755
+  with_dict: "{{ nginx_sites }}"
+
+- name: configure_nginx | copy index.html in root directory
+  copy:
+    src: index.html
+    dest: "{{ nginx_document_root }}/{{ item.key }}/html/index.html"
+    owner: "{{ site_owner }}"
+    group: "{{ site_group }}"
+    mode: 0644
+    force: no
+  with_dict: "{{ nginx_sites }}"
+
+- name: configure_nginx | copy index.html in root directory
+  copy:
+    src: index.php
+    dest: "{{ nginx_document_root }}/{{ item.key }}/html/index.php"
+    owner: "{{ site_owner }}"
+    group: "{{ site_group }}"
+    mode: 0644
+    force: no
+  with_dict: "{{ nginx_sites }}"
+
+- name: configure_nginx | update index.html in root directory
+  blockinfile:
+    path: "{{ nginx_document_root }}/{{ item.key }}/html/index.html"
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+    insertafter: "<body>"
+    content: |
+      <h1>{{ item.key }}</h1>
+      {{ nginx_document_root }}/{{ item.key }}/html/index.html
+  with_dict: "{{ nginx_sites }}"
+
+- name: Create links for sites-enabled
+  file:
+    state: link
+    src: "{{ nginx_conf_dir }}/sites-available/{{ item.key }}.conf"
+    dest: "{{ nginx_conf_dir }}/sites-enabled/{{ item.key }}.conf"
+  with_dict: "{{ nginx_sites }}"
+  notify:
+    - reload nginx
+
+- name: configure_nginx | allow nginx read
+  user:
+    name: "{{ nginx_user }}"
+    groups: "{{ site_group }}"
+    append: yes
+
+
+
+# check git>=1.7.1 (the command line tool) on ansible host, or install(?)
+#
+#  - name: configure_nginx | create /tmp/git for temporary store git repo files
+#    file:
+#      path: /tmp/git
+#      state: directory 
+#     
+#  - name: configure_nginx | download configuration files from github
+#    git:
+#      repo: https://github.com/spud206/nginx_configuration.git
+#      dest: /tmp/git/nginx_configuration
+#
+#  - name: configure_nginx | Move configuration files
+#    shell: cp -R /tmp/git/nginx_configuration/* /etc/nginx/
+#    notify: restart nginx
+#      
+#  - name: configure_nginx | remove /tmp/git
+#    file:
+#      path: /tmp/git
+#      state: absent

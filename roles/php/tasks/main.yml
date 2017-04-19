@@ -1,0 +1,6 @@
+- name: php:tasks main.yml | start install for each version
+  include: wrapper.yml php_version={{ php_version_item }}
+  with_items: "{{ php_versions }}"
+  loop_control:
+        loop_var: php_version_item
+  when: php_versions is defined

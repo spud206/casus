@@ -1,0 +1,4 @@
+php_versions:
+  - 7.0.15
+#  - 7.0.17
+php_source_make_command: "make --jobs=2"
