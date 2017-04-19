@@ -1,6 +1,7 @@
 VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "spud206/Debian"
+  config.vm.box_version = "1.0"
   config.vm.network "public_network", ip: "192.168.107.6"
   config.vm.provider "virtualbox" do |v|
     v.memory = 512
