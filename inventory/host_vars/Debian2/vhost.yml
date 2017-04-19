@@ -19,3 +19,483 @@ nginx_sites:
         fastcgi_index index.php;
         include fastcgi_params;
       }
+  www.mydomain3.com:
+    - listen 80
+    - server_name www.mydomain3.com
+    - root {{ nginx_document_root }}/www.mydomain3.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain4.com:
+    - listen 80
+    - server_name www.mydomain4.com
+    - root {{ nginx_document_root }}/www.mydomain4.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain5.com:
+    - listen 80
+    - server_name www.mydomain5.com
+    - root {{ nginx_document_root }}/www.mydomain5.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain6.com:
+    - listen 80
+    - server_name www.mydomain6.com
+    - root {{ nginx_document_root }}/www.mydomain6.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain7.com:
+    - listen 80
+    - server_name www.mydomain7.com
+    - root {{ nginx_document_root }}/www.mydomain7.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain8.com:
+    - listen 80
+    - server_name www.mydomain8.com
+    - root {{ nginx_document_root }}/www.mydomain8.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain9.com:
+    - listen 80
+    - server_name www.mydomain9.com
+    - root {{ nginx_document_root }}/www.mydomain9.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain10.com:
+    - listen 80
+    - server_name www.mydomain10.com
+    - root {{ nginx_document_root }}/www.mydomain10.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain11.com:
+    - listen 80
+    - server_name www.mydomain11.com
+    - root {{ nginx_document_root }}/www.mydomain11.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain12.com:
+    - listen 80
+    - server_name www.mydomain12.com
+    - root {{ nginx_document_root }}/www.mydomain12.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain13.com:
+    - listen 80
+    - server_name www.mydomain13.com
+    - root {{ nginx_document_root }}/www.mydomain13.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain14.com:
+    - listen 80
+    - server_name www.mydomain14.com
+    - root {{ nginx_document_root }}/www.mydomain14.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain15.com:
+    - listen 80
+    - server_name www.mydomain15.com
+    - root {{ nginx_document_root }}/www.mydomain15.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain16.com:
+    - listen 80
+    - server_name www.mydomain16.com
+    - root {{ nginx_document_root }}/www.mydomain16.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain17.com:
+    - listen 80
+    - server_name www.mydomain17.com
+    - root {{ nginx_document_root }}/www.mydomain17.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain18.com:
+    - listen 80
+    - server_name www.mydomain18.com
+    - root {{ nginx_document_root }}/www.mydomain18.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain19.com:
+    - listen 80
+    - server_name www.mydomain19.com
+    - root {{ nginx_document_root }}/www.mydomain19.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain20.com:
+    - listen 80
+    - server_name www.mydomain20.com
+    - root {{ nginx_document_root }}/www.mydomain20.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain21.com:
+    - listen 80
+    - server_name www.mydomain21.com
+    - root {{ nginx_document_root }}/www.mydomain21.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain22.com:
+    - listen 80
+    - server_name www.mydomain22.com
+    - root {{ nginx_document_root }}/www.mydomain22.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain23.com:
+    - listen 80
+    - server_name www.mydomain23.com
+    - root {{ nginx_document_root }}/www.mydomain23.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain24.com:
+    - listen 80
+    - server_name www.mydomain24.com
+    - root {{ nginx_document_root }}/www.mydomain24.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain25.com:
+    - listen 80
+    - server_name www.mydomain25.com
+    - root {{ nginx_document_root }}/www.mydomain25.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain26.com:
+    - listen 80
+    - server_name www.mydomain26.com
+    - root {{ nginx_document_root }}/www.mydomain26.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain27.com:
+    - listen 80
+    - server_name www.mydomain27.com
+    - root {{ nginx_document_root }}/www.mydomain27.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain28.com:
+    - listen 80
+    - server_name www.mydomain28.com
+    - root {{ nginx_document_root }}/www.mydomain28.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain29.com:
+    - listen 80
+    - server_name www.mydomain29.com
+    - root {{ nginx_document_root }}/www.mydomain29.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain30.com:
+    - listen 80
+    - server_name www.mydomain30.com
+    - root {{ nginx_document_root }}/www.mydomain30.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain31.com:
+    - listen 80
+    - server_name www.mydomain31.com
+    - root {{ nginx_document_root }}/www.mydomain31.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain32.com:
+    - listen 80
+    - server_name www.mydomain32.com
+    - root {{ nginx_document_root }}/www.mydomain32.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain33.com:
+    - listen 80
+    - server_name www.mydomain33.com
+    - root {{ nginx_document_root }}/www.mydomain33.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain34.com:
+    - listen 80
+    - server_name www.mydomain34.com
+    - root {{ nginx_document_root }}/www.mydomain34.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain35.com:
+    - listen 80
+    - server_name www.mydomain35.com
+    - root {{ nginx_document_root }}/www.mydomain35.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain36.com:
+    - listen 80
+    - server_name www.mydomain36.com
+    - root {{ nginx_document_root }}/www.mydomain36.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain37.com:
+    - listen 80
+    - server_name www.mydomain37.com
+    - root {{ nginx_document_root }}/www.mydomain37.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain38.com:
+    - listen 80
+    - server_name www.mydomain38.com
+    - root {{ nginx_document_root }}/www.mydomain38.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain39.com:
+    - listen 80
+    - server_name www.mydomain39.com
+    - root {{ nginx_document_root }}/www.mydomain39.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain40.com:
+    - listen 80
+    - server_name www.mydomain40.com
+    - root {{ nginx_document_root }}/www.mydomain40.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain41.com:
+    - listen 80
+    - server_name www.mydomain41.com
+    - root {{ nginx_document_root }}/www.mydomain41.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain42.com:
+    - listen 80
+    - server_name www.mydomain42.com
+    - root {{ nginx_document_root }}/www.mydomain42.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain43.com:
+    - listen 80
+    - server_name www.mydomain43.com
+    - root {{ nginx_document_root }}/www.mydomain43.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain44.com:
+    - listen 80
+    - server_name www.mydomain44.com
+    - root {{ nginx_document_root }}/www.mydomain44.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain45.com:
+    - listen 80
+    - server_name www.mydomain45.com
+    - root {{ nginx_document_root }}/www.mydomain45.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain46.com:
+    - listen 80
+    - server_name www.mydomain46.com
+    - root {{ nginx_document_root }}/www.mydomain46.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain47.com:
+    - listen 80
+    - server_name www.mydomain47.com
+    - root {{ nginx_document_root }}/www.mydomain47.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain48.com:
+    - listen 80
+    - server_name www.mydomain48.com
+    - root {{ nginx_document_root }}/www.mydomain48.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain49.com:
+    - listen 80
+    - server_name www.mydomain49.com
+    - root {{ nginx_document_root }}/www.mydomain49.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+  www.mydomain50.com:
+    - listen 80
+    - server_name www.mydomain50.com
+    - root {{ nginx_document_root }}/www.mydomain50.com/html/
+    - index index.html index.php
+    - location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:7015;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
